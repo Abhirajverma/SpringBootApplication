@@ -1,13 +1,19 @@
 package com.example.demo.repository;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Topics")
 public class Topics {
     @Id
+    @Column(name="Id")
     private String id;
+    @Column(name="Name")
     private String name;
+    @Column(name="Description")
     private String description;
  public Topics()
  {
