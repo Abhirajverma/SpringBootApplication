@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.repository.Confirmation;
 import com.example.demo.repository.TopicRepository;
 import com.example.demo.repository.Topics;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +26,24 @@ public class TopicService {
        return (Topics)t;
     }
 
-    public void addTopic(Topics topic) {
+    public Confirmation addTopic(Topics topic) {
         topicRepository.save(topic);
+        return new Confirmation(topic,"Post Operation Successful");
     }
 
-    public void updateTopic(String id, Topics topic) {
+    public Confirmation updateTopic(String id, Topics topic) {
       topicRepository.save(topic);
       if(!(topic.getId().equals(id)))
       {
           topicRepository.deleteById(id);
       }
+        return new Confirmation(topic,"Put Operation Successful");
     }
-    public void deleteTopic(String id) {
-      topicRepository.deleteById(id);
+    public Confirmation deleteTopic(String id) {
+
+        topicRepository.deleteById(id);
+        return new Confirmation(null,"Delete Operation Successful");
+
     }
 
 
@@ -49,5 +55,6 @@ public class TopicService {
                return true;
            return false;
     }
+
 }
 
