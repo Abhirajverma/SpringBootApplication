@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicService {
@@ -22,8 +23,9 @@ public class TopicService {
     }
     public Topics getTopic(String id)
     {
-       Object t= topicRepository.findById(id);
-       return (Topics)t;
+        Optional<Topics> t=topicRepository.findById(id);
+        return t.get();
+
     }
 
     public Confirmation addTopic(Topics topic) {
