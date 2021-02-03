@@ -26,6 +26,7 @@ public class TopicService {
         Optional<Topics> t=topicRepository.findById(id);
         return t.get();
 
+
     }
 
     public Confirmation addTopic(Topics topic) {
@@ -42,9 +43,9 @@ public class TopicService {
         return new Confirmation(topic,"Put Operation Successful");
     }
     public Confirmation deleteTopic(String id) {
-
+        Topics topic=getTopic(id);
         topicRepository.deleteById(id);
-        return new Confirmation(null,"Delete Operation Successful");
+        return new Confirmation(topic,"Delete Operation Successful");
 
     }
 
