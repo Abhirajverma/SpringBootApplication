@@ -28,7 +28,6 @@ public class TopicController {
     @GetMapping("/getByName/{name}")
     public Topics getTopicByName(@PathVariable String name) { return topicService.getTopicByName(name); }
 
-
     @PostMapping("/addTopic")
     public Topics addTopic(@RequestBody Topics topic) { return topicService.addTopic(topic); }
 

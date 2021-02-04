@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,22 +44,20 @@ public class TopicService {
         }
     }
 
-  public Topics getTopicByName(String name)
-  {
-    Optional<Topics> topic = topicRepository.findByName(name);
-    if(topic.isPresent())
+    public Topics getTopicByName(String name)
     {
-      logger.info(Constants.SUCCESS);
-      return topic.get();
-    }
-    else
-    {
+      Optional<Topics> topic = topicRepository.findByName(name);
+      if(topic.isPresent())
+      {
+       logger.info(Constants.SUCCESS);
+       return topic.get();
+      }
+     else
+     {
       logger.warn(Constants.FAILURE);
       return null;
+     }
     }
-  }
-
-
 
    public Topics addTopic(Topics topic)
    {
