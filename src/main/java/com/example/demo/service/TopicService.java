@@ -1,63 +1,118 @@
 package com.example.demo.service;
 
-import com.example.demo.repository.Confirmation;
-import com.example.demo.repository.TopicRepository;
-import com.example.demo.repository.Topics;
+import com.example.demo.db.repository.TopicRepository;
+import com.example.demo.db.entity.Topics;
+import com.example.demo.utils.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class TopicService {
+
+    private static final Logger logger= LoggerFactory.getLogger(TopicService.class);
 
     @Autowired
     private TopicRepository topicRepository;
 
-    public List<Topics> getTopics() {
-        List<Topics> topic=new ArrayList<>();
-        topicRepository.findAll().forEach(topic::add);
+    public List<Topics> getAllTopics()
+    {
+        List<Topics> topic=new ArrayList<>(topicRepository.findAll());
+        logger.info(Constants.SUCCESS);
         return topic;
     }
-    public Topics getTopic(String id)
+
+    public Topics getTopic(Long id)
     {
-        Optional<Topics> t=topicRepository.findById(id);
-        return t.get();
-
-
+        Optional<Topics> topic = topicRepository.findById(id);
+        if(topic.isPresent())
+        {
+            logger.info(Constants.SUCCESS);
+            return topic.get();
+        }
+        else
+        {
+            logger.warn(Constants.FAILURE);
+            return null;
+        }
     }
 
-    public Confirmation addTopic(Topics topic) {
+  public Topics getTopicByName(String name)
+  {
+    Optional<Topics> topic = topicRepository.findByName(name);
+    if(topic.isPresent())
+    {
+      logger.info(Constants.SUCCESS);
+      return topic.get();
+    }
+    else
+    {
+      logger.warn(Constants.FAILURE);
+      return null;
+    }
+  }
+
+
+
+   public Topics addTopic(Topics topic)
+   {
         topicRepository.save(topic);
-        return new Confirmation(topic,"Post Operation Successful");
+        logger.info(Constants.SUCCESS);
+        return topic;
+   }
+
+   public Topics updateTopic(Long id, Topics topic)
+    {
+        if(topicRepository.existsById(id))
+        {
+          Topics existingTopic=topicRepository.getOne(id);
+          BeanUtils.copyProperties(topic,existingTopic,"id");
+          topic=topicRepository.saveAndFlush(existingTopic);
+          logger.info(Constants.SUCCESS);
+        }
+        else
+        {
+           logger.warn(Constants.FAILURE);
+           topic=null;
+        }
+      return topic;
     }
 
-    public Confirmation updateTopic(String id, Topics topic) {
-      topicRepository.save(topic);
-      if(!(topic.getId().equals(id)))
-      {
-          topicRepository.deleteById(id);
-      }
-        return new Confirmation(topic,"Put Operation Successful");
+    public Topics deleteTopicById(Long id)
+    {
+        if (topicRepository.existsById(id))
+       {
+           topicRepository.deleteById(id);
+           logger.info(Constants.SUCCESS);
+       }
+       else
+       {
+           logger.warn(Constants.FAILURE);
+       }
+       return null;
     }
-    public Confirmation deleteTopic(String id) {
-        Topics topic=getTopic(id);
-        topicRepository.deleteById(id);
-        return new Confirmation(topic,"Delete Operation Successful");
 
+  public Topics deleteTopicByName(String name)
+  {
+    if (topicRepository.existsByName(name))
+    {
+      topicRepository.deleteByName(name);
+      logger.info(Constants.SUCCESS);
     }
-
-
-    public boolean checkId(String id) {
-        List<Topics> topic=new ArrayList<>();
-        topicRepository.findAll().forEach(topic::add);
-       for(Topics t:topic)
-           if(t.getId().equals(id))
-               return true;
-           return false;
+    else
+    {
+      logger.warn(Constants.FAILURE);
     }
+    return null;
+  }
 
 }
 
