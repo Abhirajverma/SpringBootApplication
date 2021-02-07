@@ -29,7 +29,7 @@ public class TopicService {
         return topic;
     }
 
-    public Topics getTopic(Long id)
+    public Topics getTopicById(Long id)
     {
         Optional<Topics> topic = topicRepository.findById(id);
         if(topic.isPresent())
@@ -61,9 +61,9 @@ public class TopicService {
 
    public Topics addTopic(Topics topic)
    {
-        topicRepository.save(topic);
+        Topics savedTopic=topicRepository.saveAndFlush(topic);
         logger.info(Constants.SUCCESS);
-        return topic;
+        return savedTopic;
    }
 
    public Topics updateTopic(Long id, Topics topic)

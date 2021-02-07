@@ -22,7 +22,7 @@ public class TopicController {
     @GetMapping("/getById/{id}")
     public Topics getTopic(@PathVariable Long id)
     {
-        return topicService.getTopic(id);
+        return topicService.getTopicById(id);
     }
 
     @GetMapping("/getByName/{name}")
