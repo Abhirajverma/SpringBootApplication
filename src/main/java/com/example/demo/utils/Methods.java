@@ -11,4 +11,8 @@ public class Methods {
     return objectMapper.writeValueAsString(object);
   }
 
+  public static String fullUrlWithPort(int port,String uri)
+  {
+    return Constants.HOST+port+uri;
+  }
 }
