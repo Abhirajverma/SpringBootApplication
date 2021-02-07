@@ -3,8 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.db.entity.Topics;
 import com.example.demo.service.TopicService;
 import com.example.demo.utils.Methods;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -35,8 +33,8 @@ public class TopicControllerTest {
     private TopicService topicService;
 
     @Test
-    public void testMyList() throws Exception {
-
+    public void testMyList() throws Exception
+    {
         Topics topic1=new Topics(1L,"Javascript","Javascript Description", LocalDateTime.now(),LocalDateTime.now());
         Topics topic2=new Topics(2L,"Java","Java Description", LocalDateTime.now(),LocalDateTime.now());
         List<Topics> topicsList=new ArrayList<>();
@@ -50,12 +48,11 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$[0].id").value(topic1.getId()))
                 .andExpect(jsonPath("$[0].name").value(topic1.getName()))
                 .andExpect(jsonPath("$[0].description").value(topic1.getDescription()));
-
     }
 
     @Test
-    public void testGetTopic() throws Exception {
-
+    public void testGetTopic() throws Exception
+    {
         Topics topic1=new Topics(1L,"Javascript","Javascript Description", LocalDateTime.now(),LocalDateTime.now());
         Topics topic2=new Topics(2L,"Java","Java Description", LocalDateTime.now(),LocalDateTime.now());
         List<Topics> topicsList=new ArrayList<>();
@@ -68,12 +65,11 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$.id").value(topic1.getId()))
                 .andExpect(jsonPath("$.name").value(topic1.getName()))
                 .andExpect(jsonPath("$.description").value(topic1.getDescription()));
-
     }
 
     @Test
-    public void testAddTopic() throws Exception {
-
+    public void testAddTopic() throws Exception
+    {
         Topics topic=new Topics(1L,"Javascript","Javascript Description", LocalDateTime.now(),LocalDateTime.now());
         Mockito.when(topicService.addTopic(Mockito.any(Topics.class))).thenReturn(topic);
         String jsonTopic=Methods.mapToJson(topic);
@@ -85,12 +81,11 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$.id").value(topic.getId()))
                 .andExpect(jsonPath("$.name").value(topic.getName()))
                 .andExpect(jsonPath("$.description").value(topic.getDescription()));
-
     }
 
     @Test
-    public void testUpdateTopic() throws Exception {
-
+    public void testUpdateTopic() throws Exception
+    {
         Topics topic=new Topics(1L,"Javascript","Javascript Description", LocalDateTime.now(),LocalDateTime.now());
         Mockito.when(topicService.updateTopic(1L,topic)).thenReturn(topic);
         String jsonTopic= Methods.mapToJson(topic);
@@ -102,12 +97,11 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$.id").value(topic.getId()))
                 .andExpect(jsonPath("$.name").value(topic.getName()))
                 .andExpect(jsonPath("$.description").value(topic.getDescription()));
-
     }
 
     @Test
-    public void testDeleteTopicById() throws Exception {
-
+    public void testDeleteTopicById() throws Exception
+    {
         Topics topic=new Topics(1L,"Javascript","Javascript Description", LocalDateTime.now(),LocalDateTime.now());
         Mockito.when(topicService.deleteTopicById(1L)).thenReturn(topic);
         mockMvc.perform(delete("/topics/deleteTopicById/1")
@@ -117,14 +111,7 @@ public class TopicControllerTest {
                 .andExpect(jsonPath("$.id").value(topic.getId()))
                 .andExpect(jsonPath("$.name").value(topic.getName()))
                 .andExpect(jsonPath("$.description").value(topic.getDescription()));
-
     }
-
-
-
-
-
-
 }
 
 
