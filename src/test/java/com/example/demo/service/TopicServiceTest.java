@@ -32,7 +32,7 @@ class TopicServiceTest {
     @Test
     void getAllTopicsTest()
     {
-        Topics topic1=new Topics(1L,"Java","Java Description", LocalDateTime.now(),LocalDateTime.now());
+        Topics topic1=new Topics(1L,"Java","Java Description",LocalDateTime.now() ,LocalDateTime.now());
         Topics topic2=new Topics(2L,"Javascript","Javascript Description", LocalDateTime.now(),LocalDateTime.now());
         List<Topics> topicList=new ArrayList<>();
         topicList.add(topic1);
