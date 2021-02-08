@@ -1,6 +1,5 @@
-package com.example.demo.controller;
+package com.example.demo;
 
-import com.example.demo.TopicApplication;
 import com.example.demo.db.entity.Topics;
 import com.example.demo.utils.Constants;
 import org.junit.Test;
@@ -21,7 +20,7 @@ import java.time.LocalDateTime;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes=TopicApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TopicControllerIntegrationTest {
+public class TopicApplicationIntegrationTest {
 
   @LocalServerPort
   private int port;
